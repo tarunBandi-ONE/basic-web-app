@@ -87,20 +87,29 @@ export default function QueryProcessor(query: string): string {
         return 'Invalid query format';
     }
   } 
-  else if ((query.toLowerCase().includes("square")))
-  {
-    const regex = /Which of the following numbers is both a square and a cube: (\d+), (\d+), (\d+), (\d+), (\d+), (\d+), (\d+)\?/
-    const match = query.match(regex);
-    if (match) {
-      for (let i = 1; i < 8; i++)
-      {
-        if (isSquareAndCube(parseInt(match[i])))
-          return match[i].toString();
-      }
-      return "None were squares or cubes";
-    }
-      return "Invalid query";
-  }
+  else if (query.toLowerCase().includes("which of the following numbers is both a square and a cube")) {
+    // Extracting numbers from the query
+    const numbersRegex = /Which of the following numbers is both a square and a cube: ((?:\d+, )*\d+)\?/;
+    const numbersMatch = query.match(numbersRegex);
 
+    if (numbersMatch) {
+        const numbersList = numbersMatch[1].split(', ').map(Number);
+
+        // Find numbers which are both square and cube
+        const resultNumbers = numbersList.filter(number => {
+            const squareRoot = Math.sqrt(number);
+            const cubeRoot = Math.cbrt(number);
+            return Number.isInteger(squareRoot) && Number.isInteger(cubeRoot);
+        });
+
+        if (resultNumbers.length > 0) {
+            return resultNumbers.join(', ');
+        } else {
+            return 'None';
+        }
+    } else {
+        return 'Invalid query format';
+    }
+}
   return "";
 }
