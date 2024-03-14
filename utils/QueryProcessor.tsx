@@ -28,14 +28,28 @@ export default function QueryProcessor(query: string): string {
       const num1 = parseInt(match[1]);
       const num2 = parseInt(match[2]);
       const num3 = parseInt(match[3]);
-
-      // Performing addition
       const result = Math.max(num1,num2,num3);
       return result.toString();
-  } else {
+  } 
+  
+  else {
       return 'Invalid query format';
   }
 
+  } else if ((query.toLowerCase().includes("multiplied")))
+  {
+    const regex = /What is (\d+) multiplied by (\d+)\?/;
+    const match = query.match(regex);
+
+    if (match) {
+        const num1 = parseInt(match[1]);
+        const num2 = parseInt(match[2]);
+
+        const result = num1 * num2;
+        return result.toString();
+    } else {
+        return 'Invalid query format';
+    }
   }
 
   return "";
