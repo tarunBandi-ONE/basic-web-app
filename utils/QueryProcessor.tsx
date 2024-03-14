@@ -27,7 +27,16 @@ export default function QueryProcessor(query: string): string {
           const result = num1 + num2;
           return result.toString();
       } else {
-          return 'Invalid query format';
+        const regex = /What is (\d+) plus (\d+) plus (\d+)\?/;
+        const match = query.match(regex);
+        if (match)
+        {
+          const num1 = parseInt(match[1]);
+          const num2 = parseInt(match[2]);
+          const num3 = parseInt(match[3]);     
+          const result = num1 + num2 + num3;   
+          return result.toString();
+        }
       }
   } else if ((query.toLowerCase().includes("largest"))) {
     const regex = /Which of the following numbers is the largest: (\d+), (\d+), (\d+)\?/;
