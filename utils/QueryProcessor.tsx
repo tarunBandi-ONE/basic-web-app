@@ -10,14 +10,12 @@ export default function QueryProcessor(query: string): string {
   } else if (query.toLowerCase().includes("plus")) {
       const regex = /What is (\d+) plus (\d+)\?/;
 
-      // Extracting numbers from the query
       const match = query.match(regex);
 
       if (match) {
           const num1 = parseInt(match[1]);
           const num2 = parseInt(match[2]);
 
-          // Performing addition
           const result = num1 + num2;
           return result.toString();
       } else {
